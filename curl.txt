@@ -1,0 +1,11 @@
+curl -v -H "content-type: application/json" -d '{"code": "G3B.SI", "name": "STI ETF", "marketPlace": "SGX", "addedDate": "2021-06-24", "currency": "SGD", "investedAmount": 3000, "unitNumber": 1500, "marketUnitPrice": 2.00, "investedUnitPrice": 2.00}' http://localhost:8080/stocks
+
+curl -v -H "content-type: application/json" -d '{"code": "G3B.SI", "name": "STI ETF", "marketPlace": "SGX", "addedDate": "2021-06-23", "currency": "SGD", "investedAmount": 3000, "unitNumber": 1000, "marketUnitPrice": 3.00, "investedUnitPrice": 3.00}' http://localhost:8080/stocks
+
+curl -v http://localhost:8080/stock-histories/SGX/G3B.SI | jq .
+
+curl -H "content-type: application/json" -d '{"currency": "SGD", "amount": 312.20}' http://localhost:8080/stocks/1/dividends
+
+curl -H "content-type: application/json" -d '{"currency": "SGD", "amount": 12.20, "addedDate": "2018-05-20"}' http://localhost:8080/stocks/1/dividends
+
+curl http://localhost:8080/stocks/1/dividends
