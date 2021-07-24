@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.r2dbc.init.R2dbcScriptDatabaseInitializer;
+import org.springframework.boot.sql.init.DatabaseInitializationMode;
 import org.springframework.boot.sql.init.DatabaseInitializationSettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -28,6 +29,8 @@ public class WealthMgmtSystemApplication {
 	R2dbcScriptDatabaseInitializer r2dbcInit(ConnectionFactory connFactory) {
 		DatabaseInitializationSettings settings = new DatabaseInitializationSettings();
 		settings.setSchemaLocations(Arrays.asList("schema.sql"));
+		// so that file based will be initialised too, else only embedded based is the candidate
+		settings.setMode(DatabaseInitializationMode.ALWAYS); 
 
 		return new R2dbcScriptDatabaseInitializer(connFactory, settings);
 	}

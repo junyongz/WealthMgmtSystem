@@ -147,6 +147,7 @@ public class StockHistory {
 		mapper.from(stock::getInvestedUnitPrice).to(hist::setInvestedUnitPrice);
 		mapper.from(stock::getMarketPlace).to(hist::setMarketPlace);
 		mapper.from(stock::getMarketValue).to(hist::setMarketValue);
+		mapper.from(stock::getMarketUnitPrice).to(hist::setMarketUnitPrice);
 		mapper.from(stock::getUnitNumber).to(hist::setUnitNumber);
 		mapper.from(stock::getAddedDate).to(hist::setAddedDate);
 		
