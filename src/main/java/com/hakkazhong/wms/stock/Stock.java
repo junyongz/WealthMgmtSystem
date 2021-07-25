@@ -1,6 +1,7 @@
 package com.hakkazhong.wms.stock;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -165,7 +166,7 @@ public class Stock {
 
 			// invested unit price to recalculated based on: new invested amount
 			// / new unit number
-			this.investedUnitPrice = this.investedAmount.divide(new BigDecimal(this.unitNumber));
+			this.investedUnitPrice = this.investedAmount.divide(new BigDecimal(this.unitNumber), 3, RoundingMode.HALF_UP);
 
 			// market unit price should always override it
 			this.marketUnitPrice = topupStock.marketUnitPrice;
