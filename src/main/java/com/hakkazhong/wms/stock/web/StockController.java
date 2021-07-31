@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hakkazhong.wms.stock.Stock;
+import com.hakkazhong.wms.stock.StockHistory;
+import com.hakkazhong.wms.stock.StockHistoryRepository;
 import com.hakkazhong.wms.stock.StockRepository;
 import com.hakkazhong.wms.stock.StockService;
 
@@ -21,6 +23,8 @@ import reactor.core.publisher.Mono;
 public class StockController {
 
 	private StockRepository stockRepository;
+	
+	private StockHistoryRepository stockHistoryRepository;
 
 	private StockService stockService;
 
@@ -42,6 +46,12 @@ public class StockController {
 	@GetMapping("/{id}")
 	public Mono<Stock> getStockById(@PathVariable("id") Long id) {
 		return stockRepository.findById(id);
+	}
+	
+	@GetMapping("/{id}/histories")
+	public Flux<StockHistory> getStockHistoriesById(@PathVariable("id") Long id) {
+		return stockRepository.findById(id).flatMapMany(
+				stock -> stockHistoryRepository.findByMarketPlaceAndCode(stock.getMarketPlace(), stock.getCode()));
 	}
 
 	@GetMapping(params = "search=by-code")
