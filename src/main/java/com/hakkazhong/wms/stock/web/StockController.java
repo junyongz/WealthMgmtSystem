@@ -23,13 +23,15 @@ import reactor.core.publisher.Mono;
 public class StockController {
 
 	private StockRepository stockRepository;
-	
+
 	private StockHistoryRepository stockHistoryRepository;
 
 	private StockService stockService;
 
-	public StockController(StockRepository stockRepository, StockService stockService) {
+	public StockController(StockRepository stockRepository, StockHistoryRepository stockHistoryRepository,
+			StockService stockService) {
 		this.stockRepository = stockRepository;
+		this.stockHistoryRepository = stockHistoryRepository;
 		this.stockService = stockService;
 	}
 
@@ -42,12 +44,12 @@ public class StockController {
 	public Flux<Stock> allStocks() {
 		return stockRepository.findAll(Sort.by("addedDate").descending());
 	}
-	
+
 	@GetMapping("/{id}")
 	public Mono<Stock> getStockById(@PathVariable("id") Long id) {
 		return stockRepository.findById(id);
 	}
-	
+
 	@GetMapping("/{id}/histories")
 	public Flux<StockHistory> getStockHistoriesById(@PathVariable("id") Long id) {
 		return stockRepository.findById(id).flatMapMany(
